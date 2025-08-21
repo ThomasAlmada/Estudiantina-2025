@@ -18,19 +18,19 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4 sm:p-6 lg:p-8">
-      <div className="w-full max-w-sm">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-primary via-blue-800 to-slate-900 p-4 sm:p-6 lg:p-8">
+      <div className="w-full max-w-md">
         <div className="text-center mb-8">
-            <img src="https://i.imgur.com/8f9oA3B.png" alt="Logo Colegio" className="w-24 h-24 mx-auto mb-4"/>
-            <h1 className="text-2xl font-bold text-gray-800">Estudiantina B.O.P. N.º 20</h1>
-            <p className="text-gray-600">Sistema de Gestión de Eventos</p>
+            <img src="https://bop20.edu.ar/wp-content/uploads/cropped-LOGO-BOP20-2023-126x130.jpg" alt="Logo Colegio" className="w-28 h-28 mx-auto mb-4 bg-white p-2 rounded-full shadow-lg"/>
+            <h1 className="text-3xl font-bold text-white tracking-tight">Estudiantina B.O.P. N.º 20</h1>
+            <p className="text-blue-200">Sistema de Gestión de Eventos</p>
         </div>
-       <div className="w-full p-8 space-y-6 bg-white rounded-lg shadow-lg">
+       <div className="w-full p-8 space-y-6 bg-white rounded-xl shadow-2xl">
         <div className="text-center">
-            <h2 className="text-xl font-semibold text-gray-900">Iniciar Sesión</h2>
+            <h2 className="text-2xl font-semibold text-dark">Iniciar Sesión</h2>
             <p className="mt-1 text-sm text-gray-500">Ingrese su DNI para acceder al panel.</p>
         </div>
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="dni" className="sr-only">
               DNI
@@ -41,7 +41,7 @@ export const Login: React.FC = () => {
               type="text"
               inputMode="numeric"
               required
-              className="relative block w-full px-4 py-3 text-center text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary"
+              className="relative block w-full px-4 py-3 text-center text-lg text-dark placeholder-gray-500 border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               placeholder="Número de Documento"
               value={dni}
               onChange={(e) => setDni(e.target.value.replace(/\D/g, ''))}
@@ -54,7 +54,7 @@ export const Login: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="group relative flex justify-center w-full py-3 px-4 border border-transparent text-base font-medium rounded-md text-white bg-brand-primary hover:bg-brand-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-dark transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
+              className="group relative flex justify-center w-full py-3 px-4 border border-transparent text-base font-medium rounded-lg text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -69,7 +69,7 @@ export const Login: React.FC = () => {
           </div>
         </form>
       </div>
-       <footer className="mt-8 text-center text-sm text-gray-500">
+       <footer className="mt-8 text-center text-sm text-blue-300">
           <p>&copy; {new Date().getFullYear()} B.O.P. N.º 20. Desarrollo y sistema.</p>
       </footer>
     </div>

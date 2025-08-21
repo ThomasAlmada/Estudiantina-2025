@@ -23,7 +23,7 @@ const App: React.FC = () => {
                 return <JuryPanel />;
             case UserRole.DOCENTE:
             case UserRole.PRECEPTOR:
-            case UserRole.DIRECTIVO:
+            case UserRole.ADMIN:
                 return <StaffPanel />;
             case UserRole.VISITANTE:
                 return <VisitorPanel />;
@@ -33,7 +33,7 @@ const App: React.FC = () => {
     };
     
     return (
-        <div className="min-h-screen bg-slate-100">
+        <div className="min-h-screen bg-light">
             <Header />
             <main>
                 {panelContent()}
@@ -44,8 +44,8 @@ const App: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-brand-primary">
-        <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-brand-secondary"></div>
+      <div className="flex items-center justify-center min-h-screen bg-primary">
+        <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-secondary"></div>
       </div>
     );
   }

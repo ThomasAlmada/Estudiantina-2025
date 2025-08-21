@@ -4,7 +4,7 @@ export enum UserRole {
   JURADO = 'Jurado',
   DOCENTE = 'Docente',
   PRECEPTOR = 'Preceptor',
-  DIRECTIVO = 'Directivo',
+  ADMIN = 'Admin',
   VISITANTE = 'Visitante',
   PROHIBIDO = 'Prohibido',
 }

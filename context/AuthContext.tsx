@@ -1,7 +1,7 @@
 
 import React, { createContext, useState, useContext, ReactNode, useCallback, useEffect } from 'react';
 import { User, UserRole } from '../types';
-import { login as apiLogin, addUser as apiAddUser, getUsers as apiGetUsers } from '../services/authService';
+import { login as apiLogin, addUser as apiAddUser, getUsers as apiGetUsers, deleteUser as apiDeleteUser } from '../services/authService';
 
 interface AuthContextType {
   user: User | null;
@@ -10,6 +10,7 @@ interface AuthContextType {
   login: (dni: string) => Promise<void>;
   logout: () => void;
   addUser: (newUser: { dni: string; name: string; role: UserRole; course?: string }) => Promise<void>;
+  deleteUser: (dni: string) => Promise<void>;
   error: string | null;
 }
 
@@ -62,8 +63,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     await fetchUsers(); // Refresh user list after adding a new one
   }, [fetchUsers]);
 
+  const deleteUser = useCallback(async (dni: string) => {
+    await apiDeleteUser(dni);
+    await fetchUsers(); // Refresh user list
+  }, [fetchUsers]);
+
+
   return (
-    <AuthContext.Provider value={{ user, users, loading, login, logout, addUser, error }}>
+    <AuthContext.Provider value={{ user, users, loading, login, logout, addUser, deleteUser, error }}>
       {children}
     </AuthContext.Provider>
   );

@@ -10,9 +10,9 @@ import RulesCard from '../components/RulesCard';
 
 
 const JuryWelcomeHeader: React.FC<{ name: string }> = ({ name }) => (
-    <div className="bg-white p-6 rounded-lg mb-8 shadow-sm border border-gray-200">
-        <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">Panel de Jurado</h2>
-        <p className="mt-1 text-gray-600">Bienvenido/a, {name}. Seleccione una sección para continuar.</p>
+    <div className="bg-gradient-to-r from-slate-700 to-slate-800 text-white p-6 rounded-lg mb-8 shadow-lg">
+        <h2 className="text-2xl sm:text-3xl font-bold text-white">Panel de Jurado</h2>
+        <p className="mt-1 text-slate-300">Bienvenido/a, {name}. Utilice las pestañas para gestionar el evento.</p>
     </div>
 );
 
@@ -23,12 +23,15 @@ const ScoreForm: React.FC = () => {
     const [score, setScore] = useState('');
     const [submitting, setSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState<Score | null>(null);
+    const [error, setError] = useState<string | null>(null);
+
 
      const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError(null);
         const scoreValue = parseInt(score, 10);
         if (isNaN(scoreValue) || scoreValue < 0 || scoreValue > 1000) {
-            alert('Por favor ingrese un puntaje válido entre 0 y 1000.');
+            setError('Por favor ingrese un puntaje válido entre 0 y 1000.');
             return;
         }
         setSubmitting(true);
@@ -40,6 +43,7 @@ const ScoreForm: React.FC = () => {
             setTimeout(() => setSubmitted(null), 5000);
         } catch (error) {
             console.error("Failed to add score", error);
+            setError('Ocurrió un error al guardar el puntaje.');
         } finally {
             setSubmitting(false);
         }
@@ -50,26 +54,32 @@ const ScoreForm: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label htmlFor="course" className="block text-sm font-medium text-gray-700 mb-1">Curso</label>
-                    <select id="course" value={course} onChange={e => setCourse(e.target.value)} className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm rounded-md">
+                    <select id="course" value={course} onChange={e => setCourse(e.target.value)} className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
                         {COURSES.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
                 </div>
                 <div>
                     <label htmlFor="competition" className="block text-sm font-medium text-gray-700 mb-1">Competencia</label>
-                    <select id="competition" value={competition} onChange={e => setCompetition(e.target.value)} className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm rounded-md">
+                    <select id="competition" value={competition} onChange={e => setCompetition(e.target.value)} className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
                         {COMPETITIONS.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
                 </div>
                 <div>
                     <label htmlFor="score" className="block text-sm font-medium text-gray-700 mb-1">Puntaje (0-1000)</label>
-                    <input type="number" id="score" value={score} onChange={e => setScore(e.target.value)} required min="0" max="1000" className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-primary focus:border-brand-primary"/>
+                    <input type="number" id="score" value={score} onChange={e => setScore(e.target.value)} required min="0" max="1000" className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"/>
                 </div>
-                <button type="submit" disabled={submitting} className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand-primary hover:bg-brand-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary disabled:bg-gray-400">
+
+                {error && <p className="text-sm text-center text-danger bg-red-100 p-3 rounded-md">{error}</p>}
+                
+                <button type="submit" disabled={submitting} className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:bg-gray-400">
                     {submitting ? 'Guardando...' : 'Guardar Puntaje'}
                 </button>
                 {submitted && (
-                    <div className="mt-4 p-3 text-center text-green-800 bg-green-100 rounded-lg text-sm">
-                        ¡Puntaje guardado! <br/> <strong>{submitted.course} - {submitted.competition}: {submitted.score} pts</strong>
+                    <div className="mt-4 p-3 flex items-center justify-center space-x-2 text-green-800 bg-green-100 rounded-lg text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span>¡Puntaje guardado! <strong>{submitted.course} - {submitted.competition}: {submitted.score} pts</strong></span>
                     </div>
                 )}
             </form>
@@ -88,10 +98,10 @@ const RecentScores: React.FC = () => {
                     recentScores.map(s => (
                          <div key={s.id} className="bg-gray-50 p-3 rounded-md border flex justify-between items-center">
                             <div>
-                              <p className="font-semibold text-gray-800">{s.course}</p>
+                              <p className="font-semibold text-dark">{s.course}</p>
                               <p className="text-sm text-gray-500">{s.competition}</p>
                             </div>
-                            <p className="text-lg font-bold text-brand-primary">{s.score} pts</p>
+                            <p className="text-lg font-bold text-primary">{s.score} pts</p>
                         </div>
                     ))
                 ) : (
@@ -109,6 +119,8 @@ const SanctionForm: React.FC = () => {
     const [sanctionId, setSanctionId] = useState(SANCTIONS_CATALOG[0].id.toString());
     const [submitting, setSubmitting] = useState(false);
     const [success, setSuccess] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
+
 
     const selectedSanction = useMemo(() => {
         return SANCTIONS_CATALOG.find(s => s.id === parseInt(sanctionId, 10));
@@ -117,7 +129,8 @@ const SanctionForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!user || !selectedSanction) return;
-
+        
+        setError(null);
         setSubmitting(true);
         setSuccess(null);
         try {
@@ -131,6 +144,7 @@ const SanctionForm: React.FC = () => {
             setTimeout(() => setSuccess(null), 5000);
         } catch (err) {
             console.error("Failed to add sanction", err);
+            setError("Ocurrió un error al registrar la sanción.");
         } finally {
             setSubmitting(false);
         }
@@ -141,13 +155,13 @@ const SanctionForm: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label htmlFor="course-sanction" className="block text-sm font-medium text-gray-700 mb-1">Curso Sancionado</label>
-                    <select id="course-sanction" value={course} onChange={e => setCourse(e.target.value)} className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm rounded-md">
+                    <select id="course-sanction" value={course} onChange={e => setCourse(e.target.value)} className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
                         {COURSES.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
                 </div>
                 <div>
                     <label htmlFor="sanction-type" className="block text-sm font-medium text-gray-700 mb-1">Tipo de Infracción</label>
-                    <select id="sanction-type" value={sanctionId} onChange={e => setSanctionId(e.target.value)} className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm rounded-md">
+                    <select id="sanction-type" value={sanctionId} onChange={e => setSanctionId(e.target.value)} className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
                         {SANCTIONS_CATALOG.map(s => <option key={s.id} value={s.id}>{s.infraction}</option>)}
                     </select>
                 </div>
@@ -159,11 +173,20 @@ const SanctionForm: React.FC = () => {
                     </div>
                 )}
                 
+                {error && <p className="text-sm text-center text-danger bg-red-100 p-3 rounded-md">{error}</p>}
+                
                 <button type="submit" disabled={submitting} className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-danger hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-danger disabled:bg-gray-400">
                     {submitting ? 'Registrando...' : 'Registrar Sanción'}
                 </button>
 
-                    {success && <p className="text-sm text-center text-success bg-green-100 p-3 rounded-md">{success}</p>}
+                {success && (
+                    <div className="mt-4 p-3 flex items-center justify-center space-x-2 text-green-800 bg-green-100 rounded-lg text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span>{success}</span>
+                    </div>
+                )}
             </form>
         </Card>
     );
@@ -202,7 +225,11 @@ const JuryPanel: React.FC = () => {
     const NavButton: React.FC<{ sectionKey: string; label: string }> = ({ sectionKey, label }) => (
         <button
            onClick={() => setActiveSection(sectionKey)}
-           className={`px-4 py-2 text-sm font-medium rounded-md transition-colors whitespace-nowrap ${activeSection === sectionKey ? 'bg-brand-primary text-white shadow' : 'text-gray-600 hover:bg-gray-200'}`}
+           className={`whitespace-nowrap py-4 px-2 sm:px-4 border-b-2 font-medium text-sm transition-colors ${
+               activeSection === sectionKey
+               ? 'border-primary text-primary'
+               : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            }`}
          >
            {label}
          </button>
@@ -239,14 +266,14 @@ const JuryPanel: React.FC = () => {
         <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
             {user && <JuryWelcomeHeader name={user.name} />}
 
-            <div className="mb-6 bg-white p-2 rounded-lg shadow-sm overflow-x-auto">
-                <div className="flex justify-start sm:justify-center space-x-2">
+            <div className="mb-6 border-b border-gray-200">
+                <nav className="-mb-px flex space-x-2 sm:space-x-6 overflow-x-auto" aria-label="Tabs">
                     <NavButton sectionKey="scores" label="Puntajes" />
                     <NavButton sectionKey="sanctions" label="Sanciones" />
-                    <NavButton sectionKey="sanctionsCatalog" label="Catálogo de Sanciones" />
+                    <NavButton sectionKey="sanctionsCatalog" label="Catálogo" />
                     <NavButton sectionKey="schedule" label="Cronograma" />
                     <NavButton sectionKey="rules" label="Reglamento" />
-                </div>
+                </nav>
             </div>
 
             <div>

@@ -7,9 +7,9 @@ import ScheduleCard from '../components/ScheduleCard';
 import RulesCard from '../components/RulesCard';
 
 const StudentWelcomeHeader: React.FC<{ name: string }> = ({ name }) => (
-    <div className="bg-white p-6 rounded-lg mb-8 shadow-sm border border-gray-200">
-        <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">¡Hola, {name}!</h2>
-        <p className="mt-1 text-gray-600">Bienvenido/a a tu panel. Selecciona una sección para ver la información.</p>
+    <div className="bg-gradient-to-r from-primary to-blue-700 text-white p-6 rounded-lg mb-8 shadow-lg">
+        <h2 className="text-2xl sm:text-3xl font-bold">¡Hola, {name}!</h2>
+        <p className="mt-1 text-blue-100">Bienvenido/a a tu panel. Revisa tus puntajes, el cronograma y más.</p>
     </div>
 );
 
@@ -47,7 +47,11 @@ const StudentPanel: React.FC = () => {
     const NavButton: React.FC<{ sectionKey: string; label: string }> = ({ sectionKey, label }) => (
         <button
            onClick={() => setActiveSection(sectionKey)}
-           className={`px-4 py-2 text-sm font-medium rounded-md transition-colors whitespace-nowrap ${activeSection === sectionKey ? 'bg-brand-primary text-white shadow' : 'text-gray-600 hover:bg-gray-200'}`}
+           className={`whitespace-nowrap py-4 px-2 sm:px-4 border-b-2 font-medium text-sm transition-colors ${
+               activeSection === sectionKey
+               ? 'border-primary text-primary'
+               : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            }`}
          >
            {label}
          </button>
@@ -72,13 +76,13 @@ const StudentPanel: React.FC = () => {
         <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
             {user && <StudentWelcomeHeader name={user.name.split(' ')[0]} />}
             
-            <div className="mb-6 bg-white p-2 rounded-lg shadow-sm overflow-x-auto">
-                <div className="flex justify-start sm:justify-center space-x-2">
+            <div className="mb-6 border-b border-gray-200">
+                <nav className="-mb-px flex space-x-2 sm:space-x-6 overflow-x-auto" aria-label="Tabs">
                     <NavButton sectionKey="scores" label="Puntajes de mi Curso" />
                     {user?.course && <NavButton sectionKey="sanctions" label="Mis Sanciones" />}
                     <NavButton sectionKey="schedule" label="Cronograma" />
                     <NavButton sectionKey="rules" label="Reglamento" />
-                </div>
+                </nav>
             </div>
 
             <div>

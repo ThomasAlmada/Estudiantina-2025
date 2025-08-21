@@ -11,7 +11,7 @@ const initialMockDatabase: Record<string, { name: string; role: UserRole; course
   '5555': { name: 'Luis Fernandez', role: UserRole.PRECEPTOR },
   '7777': { name: 'Visitante Genérico', role: UserRole.VISITANTE },
   '8888': { name: 'Usuario Bloqueado', role: UserRole.PROHIBIDO },
-  '49993070': { name: 'Director/a Ejemplo', role: UserRole.DIRECTIVO },
+  '49993070': { name: 'Almada Eduardo Thomas', role: UserRole.ADMIN },
 };
 
 const getDatabase = (): Record<string, { name: string; role: UserRole; course?: string }> => {
@@ -63,6 +63,20 @@ export const addUser = (newUser: { dni: string; name: string; role: UserRole; co
             db[newUser.dni] = { name, role, course };
             saveDatabase(db);
             resolve({ dni: newUser.dni, name, role, course });
+        }, 300);
+    });
+};
+
+export const deleteUser = (dni: string): Promise<void> => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const db = getDatabase();
+            if (!db[dni]) {
+                return reject(new Error('Usuario no encontrado.'));
+            }
+            delete db[dni];
+            saveDatabase(db);
+            resolve();
         }, 300);
     });
 };

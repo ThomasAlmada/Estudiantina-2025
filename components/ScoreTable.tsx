@@ -55,14 +55,14 @@ const ScoreTable: React.FC<ScoreTableProps> = ({ courseFilter }) => {
 
         return (
             <div className="space-y-6">
-                <h2 className="text-xl font-bold text-gray-800 text-center mb-2">Planilla de Puntos: {courseFilter}</h2>
+                <h2 className="text-xl font-bold text-dark text-center mb-2">Planilla de Puntos: {courseFilter}</h2>
                 {COMPETITIONS_BY_DAY.map(({ day, competitions }) => (
                     <Card key={day} title={day}>
                         <ul className="divide-y divide-gray-200">
                             {competitions.map(comp => (
                                 <li key={comp} className="py-3 flex justify-between items-center">
                                     <span className="text-sm text-gray-600 flex-1 pr-4">{comp}</span>
-                                    <span className="text-sm font-bold text-brand-primary bg-blue-50 px-2 py-1 rounded">{scoresMap.get(comp) ?? '-'}</span>
+                                    <span className="text-sm font-bold text-primary bg-blue-50 px-2 py-1 rounded">{scoresMap.get(comp) ?? '-'}</span>
                                 </li>
                             ))}
                         </ul>
@@ -72,7 +72,7 @@ const ScoreTable: React.FC<ScoreTableProps> = ({ courseFilter }) => {
                     <div className="space-y-3">
                         <div className="flex justify-between items-center text-sm">
                             <span className="text-gray-600">Total Puntos Obtenidos</span>
-                            <span className="font-semibold text-gray-800">{totalScore} pts</span>
+                            <span className="font-semibold text-dark">{totalScore} pts</span>
                         </div>
                         <div className="flex justify-between items-center text-sm">
                             <span className="text-gray-600">Total Puntos por Sanciones</span>
@@ -80,8 +80,8 @@ const ScoreTable: React.FC<ScoreTableProps> = ({ courseFilter }) => {
                         </div>
                         <hr className="my-2"/>
                         <div className="flex justify-between items-center text-base">
-                            <span className="font-bold text-gray-800">Puntaje Final Neto</span>
-                            <span className="font-extrabold text-brand-primary text-lg">{finalTotal} pts</span>
+                            <span className="font-bold text-dark">Puntaje Final Neto</span>
+                            <span className="font-extrabold text-primary text-lg">{finalTotal} pts</span>
                         </div>
                     </div>
                 </Card>
@@ -91,9 +91,9 @@ const ScoreTable: React.FC<ScoreTableProps> = ({ courseFilter }) => {
 
     const PodiumItem: React.FC<{rank: number; course: string; finalTotal: number; totalScore: number; totalSanctions: number;}> = ({rank, course, finalTotal, totalScore, totalSanctions}) => {
         const styles: {[key: number]: {bg: string, text: string, ring: string, icon: string}} = {
-            1: { bg: 'bg-amber-400', text: 'text-amber-900', ring: 'ring-amber-500', icon: '🥇' },
-            2: { bg: 'bg-slate-300', text: 'text-slate-800', ring: 'ring-slate-400', icon: '🥈' },
-            3: { bg: 'bg-yellow-600', text: 'text-yellow-100', ring: 'ring-yellow-700', icon: '🥉' }
+            1: { bg: 'bg-gradient-to-br from-amber-400 to-yellow-500', text: 'text-yellow-900', ring: 'ring-yellow-500', icon: '🥇' },
+            2: { bg: 'bg-gradient-to-br from-slate-300 to-slate-400', text: 'text-slate-800', ring: 'ring-slate-400', icon: '🥈' },
+            3: { bg: 'bg-gradient-to-br from-orange-400 to-yellow-600', text: 'text-orange-900', ring: 'ring-orange-500', icon: '🥉' }
         };
         const style = styles[rank] || { bg: 'bg-gray-100', text: 'text-gray-800', ring: 'ring-gray-200', icon: '' };
         
@@ -165,11 +165,11 @@ const ScoreTable: React.FC<ScoreTableProps> = ({ courseFilter }) => {
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
-                            {COURSES.map(course => (
-                                <tr key={course} className="hover:bg-gray-50">
-                                    <td className="sticky left-0 bg-white hover:bg-gray-50 px-4 py-3 whitespace-nowrap font-medium text-gray-900 z-10 border-r">{course}</td>
+                            {COURSES.map((course, index) => (
+                                <tr key={course} className={`hover:bg-blue-50 ${index % 2 !== 0 ? 'bg-gray-50' : 'bg-white'}`}>
+                                    <td className={`sticky left-0 px-4 py-4 whitespace-nowrap font-medium text-dark z-10 border-r ${index % 2 !== 0 ? 'bg-gray-50' : 'bg-white'}`}>{course}</td>
                                     {COMPETITIONS.map(comp => (
-                                        <td key={comp} className="px-3 py-3 whitespace-nowrap text-center font-semibold border-l">
+                                        <td key={comp} className="px-3 py-4 whitespace-nowrap text-center font-semibold border-l">
                                             {scoresByCourseAndCompetition.get(course)?.get(comp) ?? '-'}
                                         </td>
                                     ))}

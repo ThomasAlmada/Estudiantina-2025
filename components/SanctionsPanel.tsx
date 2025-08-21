@@ -45,13 +45,13 @@ const SanctionsPanel: React.FC = () => {
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
                             <label htmlFor="course-sanction" className="block text-sm font-medium text-gray-700 mb-1">Curso Sancionado</label>
-                            <select id="course-sanction" value={course} onChange={e => setCourse(e.target.value)} className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm rounded-md">
+                            <select id="course-sanction" value={course} onChange={e => setCourse(e.target.value)} className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
                                 {COURSES.map(c => <option key={c} value={c}>{c}</option>)}
                             </select>
                         </div>
                         <div>
                             <label htmlFor="sanction-type" className="block text-sm font-medium text-gray-700 mb-1">Tipo de Infracción</label>
-                            <select id="sanction-type" value={sanctionId} onChange={e => setSanctionId(e.target.value)} className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm rounded-md">
+                            <select id="sanction-type" value={sanctionId} onChange={e => setSanctionId(e.target.value)} className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
                                 {SANCTIONS_CATALOG.map(s => <option key={s.id} value={s.id}>{s.infraction}</option>)}
                             </select>
                         </div>

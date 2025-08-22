@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="https://bop20.edu.ar/wp-content/uploads/cropped-LOGO-BOP20-2023-126x130.jpg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estudiantina B.O.P. N.º 20</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            'primary': '#1E40AF', // A deep, serious blue
+            'primary-dark': '#1C3891',
+            'secondary': '#F59E0B', // A rich amber/gold for accents
+            'light': '#F3F4F6', // Off-white/light gray for backgrounds
+            'dark': '#111827', // Almost black for text
+            'success': '#16A34A',
+            'danger': '#DC2626',
+            'info': '#3B82F6',
+          }
+        }
+      }
+    }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.1/",
+    "react": "https://esm.sh/react@^19.1.1",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.1/",
+    "react-dom/client": "https://esm.sh/react-dom@^19.1.1/client"
+  }
+}
+</script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+  <body class="h-full font-sans antialiased bg-light">
+    <div id="root" class="h-full"></div>
+    <script type="text/babel" data-type="module" src="./index.tsx"></script>
+  </body>
+</html>
